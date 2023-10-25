@@ -11,8 +11,11 @@ app.use(cors())
 
 app.use(express.json());
 
+//rutas
 app.use('/api/products', require('./routes/product'));
+app.use('/api/question', require('./routes/trivia'));
 
-app.listen(4000, () => {
-    console.log('El servidor esta corriendo perfectamente')
-})
+const port = 4000;
+app.listen(port, () => {
+    console.log(`Servidor Express en ejecución en el puerto ${port}`);
+});

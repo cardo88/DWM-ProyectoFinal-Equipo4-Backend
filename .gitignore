@@ -134,6 +134,6 @@ dist
 *.iml
 dist/
 e2e/
-.vscode/
+#.vscode/
 .DS_Store
-.angular
+.angular/cache

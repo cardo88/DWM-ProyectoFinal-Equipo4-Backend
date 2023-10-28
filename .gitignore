@@ -128,3 +128,12 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Ricardo | agragados
+.idea/
+*.iml
+dist/
+e2e/
+.vscode/
+.DS_Store
+.angular

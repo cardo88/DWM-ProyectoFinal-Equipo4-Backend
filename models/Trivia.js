@@ -1,27 +1,24 @@
 const mongoose = require('mongoose');
 
-// Conéctate a la base de datos MongoDB
-// mongoose.connect('mongodb://localhost/tu_base_de_datos', {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-// });
-
-// Define el modelo para las preguntas
-const TriviaSchema = mongoose.Schema({
-    question: {
+const triviaSchema = new mongoose.Schema({
+    question:{
         type: String,
         required: true
     },
-    options: {
+    options:{
         type: [String],
         required: true
     },
-    correctAnswer: {
+    correctAnswer:{
         type: String,
         required: true
     },
+    fechaCreacion: { 
+        type: Date, 
+        default: Date.now() 
+    },
 });
 
-module.exports = mongoose.model('Trivia', TriviaSchema);
+module.exports = mongoose.model('Trivia', triviaSchema);
 
 

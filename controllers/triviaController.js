@@ -37,19 +37,19 @@ exports.getQuestions = async (req, res) => {
 exports.updateQuestion = async (req, res) => {
 
     try {
-        const { question, options, correctAnswer } = req.body;
-        let updateQuestion = await Trivia.findById(req.params.id);
+        const { question, options, correctAnswer} = req.body;
+        let question1 = await Trivia.findById(req.params.id);
 
-        if (!updateQuestion) {
+        if (!question1) {
             res.status(404).json({ msg: 'No existe el producto' })
         }
 
-        updateQuestion.nombre = nombre;
-        updateQuestion.categoria = categoria;
-        updateQuestion.ubicacion = ubicacion;
+        question1.question = question;
+        question1.options = options;
+        question1.correctAnswer = correctAnswer;
 
-        updateQuestion = await Trivia.findOneAndUpdate({ _id: req.params.id }, updateQuestion, { new: true })
-        res.json(updateQuestion);
+        question1 = await Trivia.findOneAndUpdate({ _id: req.params.id }, question1, { new: true })
+        res.json(question1);
 
     } catch (error) {
         console.log(error);

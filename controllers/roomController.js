@@ -20,17 +20,6 @@ exports.createCodeNumber = async (req, res) => {
     }
 }
 
-exports.getCodeNumbers = async (req, res) => {
-    try {
-        const codeNumbers = await room.find();
-        res.json(codeNumbers)
-
-    } catch (error) {
-        console.log(error);
-        res.status(500).send('Hubo un error');
-    }
-}
-
 exports.getCodeNumber = async (req, res) => {
 
     try {
@@ -58,7 +47,7 @@ exports.deleteRoom = async (req, res) => {
         }
 
         await room.findOneAndRemove({ _id: req.params.id })
-        res.json({ msg: 'Producto eliminado con exito' });
+        res.json({ msg: 'Sala de juego eliminada con exito' });
 
     } catch (error) {
         console.log(error);

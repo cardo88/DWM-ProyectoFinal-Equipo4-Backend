@@ -7,6 +7,15 @@ yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
 
+# Ricardo | agragados
+.angular/cache
+.DS_Store
+.idea/
+*.iml
+dist/
+e2e/
+#.vscode/
+
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
@@ -128,12 +137,3 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-
-# Ricardo | agragados
-.idea/
-*.iml
-dist/
-e2e/
-#.vscode/
-.DS_Store
-.angular/cache

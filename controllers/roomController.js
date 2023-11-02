@@ -1,6 +1,6 @@
 const room = require('../models/room');
 
-exports.createCodeNumber = async (req, res) => {
+exports.createRoom = async (req, res) => {
     try {
         const codeNumber = new room(req.body);
         await codeNumber.save();

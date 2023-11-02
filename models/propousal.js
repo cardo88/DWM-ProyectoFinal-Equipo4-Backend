@@ -9,10 +9,10 @@ const propousalSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    activities:{
-        type: [mongoose.Schema.Types.ObjectId], //no sé si está bien esto
-        ref: 'Trivia'
-    },
+    // activities:{
+    //     type: [mongoose.Schema.Types.ObjectId], //no sé si está bien esto
+    //     ref: 'Trivia'
+    // },
 });
 
 const Propousal = mongoose.model('Propousal', propousalSchema);

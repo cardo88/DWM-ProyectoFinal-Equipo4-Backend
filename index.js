@@ -12,6 +12,7 @@ app.use(cors())
 app.use(express.json());
 
 app.use('/api/questions', require('./routes/trivia'));
+app.use('/api/hangman', require('./routes/hangman'));
 app.use('/api/rooms', require('./routes/room'));
 
 app.listen(4000, () => {

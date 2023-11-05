@@ -4,6 +4,7 @@ const roomController = require('../controllers/roomController');
 
 // api/productos
 router.post('/', roomController.createRoom);
+router.get('/', roomController.getRooms);
 router.get('/:id', roomController.getCodeNumber);
 router.delete('/:id', roomController.deleteRoom);
 

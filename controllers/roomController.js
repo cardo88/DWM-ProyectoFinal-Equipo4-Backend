@@ -1,8 +1,15 @@
-const room = require('../models/room');
+const Room = require('../models/Room');
+
 
 exports.createRoom = async (req, res) => {
     try {
-        const codeNumber = new room(req.body);
+        const existingRoom = await Room.findOne({ codeNumber: req.body.codeNumber });
+
+        if (existingRoom) {
+            return res.status(400).json({ msg: 'Ya existe una sala con este código' });
+        }
+
+        const codeNumber = new Room(req.body);
         await codeNumber.save();
         res.status(201).json(codeNumber);
     } catch (error) {
@@ -23,7 +30,7 @@ exports.createRoom = async (req, res) => {
 exports.getCodeNumber = async (req, res) => {
 
     try {
-        let codeNumber = await room.findById(req.params.id);
+        let codeNumber = await Room.findById(req.params.id);
 
         if (!codeNumber) {
             res.status(404).json({ msg: 'No existe el código' })
@@ -40,7 +47,7 @@ exports.getCodeNumber = async (req, res) => {
 exports.deleteRoom = async (req, res) => {
 
     try {
-        let codeNumber = await room.findById(req.params.id);
+        let codeNumber = await Room.findById(req.params.id);
 
         if (!codeNumber) {
             res.status(404).json({ msg: 'No existe el código' })
@@ -53,4 +60,18 @@ exports.deleteRoom = async (req, res) => {
         console.log(error);
         res.status(500).send('Hubo un error');
     }
+}
+
+exports.getRooms = async (req, res) => {
+
+    try {
+
+        const rooms = await Room.find();
+        res.json(rooms)
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+
 }

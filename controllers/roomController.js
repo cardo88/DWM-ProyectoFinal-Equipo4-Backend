@@ -30,10 +30,9 @@ exports.createRoom = async (req, res) => {
 exports.getCodeNumber = async (req, res) => {
 
     try {
-        let codeNumber = await Room.findById(req.params.id);
-
-        if (!codeNumber) {
-            res.status(404).json({ msg: 'No existe el código' })
+        let codeNumber = await Room.find({ codeNumber: req.params.codeNumber });
+        if (!codeNumber ) {
+            res.status(404).json({ msg: 'Error 404 en getCodeNumber.' })            
         }
 
         res.json(codeNumber);

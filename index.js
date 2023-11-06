@@ -18,6 +18,7 @@ app.use(express.json());
 app.use('/api/questions', require('./routes/trivia'));
 app.use('/api/hangman', require('./routes/hangman'));
 app.use('/api/rooms', require('./routes/room'));
+app.use('/api/proposals', require('./routes/proposals'));
 
 const PORT = process.env.PORT || 4000;
 

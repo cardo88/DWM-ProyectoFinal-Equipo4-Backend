@@ -1,5 +1,8 @@
 # DWM-ProyectoFinal-Equipo4-Backend
 
+npm install express
+npm install bcrypt
+npm install jsonwebtoken
 para correr el servidor de continuo:
 npm install -g nodemon
 y luego ejecutar, en vez de

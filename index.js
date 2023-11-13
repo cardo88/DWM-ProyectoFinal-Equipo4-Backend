@@ -45,14 +45,31 @@ app.get('/', function (req, res) {
 
 io.on('connection', (socket) => {
 
-    socket.on('joinRoom', ({ room }) => {
-        console.log(room);
+    // let playersRoom = 0;
+    let room;
+
+    socket.on('joinRoom', ({ room, nickname }) => {
+        let socketid = socket.id;
+        console.log('Socket.id ' + socketid + ' | Nickname: ' + nickname + ' | Sala: ' + room);
         socket.join(room);
-        console.log('Usuario ' + socket.id + 'se unió a la sala ' + room);
-        // io.to(nameRoom).emit('joinRoom', room);
-        io.to(room).emit('evento', { mensaje: 'Mensaje para la sala '+room+': se ha unido el dispositivo: '+socket.id }); //puedo usar esto para enviar mensajes a la sala
+        io.to(room).emit('joinRoom', { socketid, room, nickname }); //puedo usar esto para enviar mensajes a la sala
         //recordar que si el usuario cambia de sala, debo usar el leave de Socket.IO.
     })
+
+    socket.on('mensaje', ({ mensaje }) => {
+        console.log(mensaje);
+        socket.join(room);
+        io.to(room).emit('mensaje', { mensaje }); //puedo usar esto para enviar mensajes a la sala
+        //recordar que si el usuario cambia de sala, debo usar el leave de Socket.IO.
+    })
+
+
+    // socket.on('room', ({ room }) => {
+    //     console.log(room);
+    //     socket.join(room);
+    //     io.to(room).emit('room', { room }); //puedo usar esto para enviar mensajes a la sala
+    //     //recordar que si el usuario cambia de sala, debo usar el leave de Socket.IO.
+    // })
 
     socket.on('disconnect', () => {
         console.log('Usuario desconectado');

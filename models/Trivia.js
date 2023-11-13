@@ -13,6 +13,10 @@ const triviaSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    isChecked: { 
+        type: Boolean, 
+        default: false 
+    },
     fechaCreacion: { 
         type: Date, 
         default: Date.now() 

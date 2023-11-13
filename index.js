@@ -26,10 +26,10 @@ app.listen(PORTnode, () => {
 
 
 
+// -------------------------------CONFIGURACION PARA WEBSOCKET---------------------------------------
+// ________  ________  ________  ________  ________  ________  ________  ________  ________  ________  
+//         \/        \/        \/        \/        \/        \/        \/        \/        \/        
 
-
-
-// configuración para websocket
 
 const options = {
     cors: {
@@ -45,9 +45,15 @@ app.get('/', function (req, res) {
 
 io.on('connection', (socket) => {
 
-    // let playersRoom = 0;
-    let room;
+    //Socket Target: mensaje generico para pruebas
+    socket.on('mensaje', ({ room, mensaje }) => {
+        console.log(room + ' | ' + mensaje);
+        socket.join(room);
+        io.to(room).emit('mensaje', { mensaje }); //puedo usar esto para enviar mensajes a la sala
+        //recordar que si el usuario cambia de sala, debo usar el leave de Socket.IO.
+    })
 
+    //Socket Target: para cuando se une un PLAYER a una ROOM
     socket.on('joinRoom', ({ room, nickname }) => {
         let socketid = socket.id;
         console.log('Socket.id ' + socketid + ' | Nickname: ' + nickname + ' | Sala: ' + room);
@@ -56,20 +62,14 @@ io.on('connection', (socket) => {
         //recordar que si el usuario cambia de sala, debo usar el leave de Socket.IO.
     })
 
-    socket.on('mensaje', ({ mensaje }) => {
-        console.log(mensaje);
+    //Socket Target: comienzo de PARTIDA en una ROOM
+    socket.on('roomStartPlay', ({ room, play }) => {
+        console.log(room + ' | ' + play);
         socket.join(room);
-        io.to(room).emit('mensaje', { mensaje }); //puedo usar esto para enviar mensajes a la sala
+        io.to(room).emit('roomStartPlay', { play }); //puedo usar esto para enviar mensajes a la sala
         //recordar que si el usuario cambia de sala, debo usar el leave de Socket.IO.
     })
 
-
-    // socket.on('room', ({ room }) => {
-    //     console.log(room);
-    //     socket.join(room);
-    //     io.to(room).emit('room', { room }); //puedo usar esto para enviar mensajes a la sala
-    //     //recordar que si el usuario cambia de sala, debo usar el leave de Socket.IO.
-    // })
 
     socket.on('disconnect', () => {
         console.log('Usuario desconectado');
@@ -82,3 +82,6 @@ server.listen(PORTwebsocket, function () {
     console.log(`Info msg: index.js >> WebSocket listo y escuchando por el puerto: ` + PORTwebsocket)
 })
 
+
+// ________/\________/\________/\________/\________/\________/\________/\________/\________/\________
+// -------------------------------CONFIGURACION PARA WEBSOCKET---------------------------------------

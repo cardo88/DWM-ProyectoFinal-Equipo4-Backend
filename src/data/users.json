@@ -1,0 +1,17 @@
+[
+{
+    "name":"Manuel",
+    "email":"manuel@gmail.com",
+    "password":"pass1234",
+    "passwordConfirmation":"pass1234"
+
+},
+{
+
+    "name":"Pedro",
+    "email":"pedro@adinet.com.uy",
+    "password":"pass4234",
+    "passwordConfirmation":"pass4234"
+
+}
+]

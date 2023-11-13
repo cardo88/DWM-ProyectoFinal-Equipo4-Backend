@@ -42,7 +42,7 @@ router.post("/signup", (req, res) => {
   }
 
   const saltRounds = 10;
-  // 👇 Hash the provided password using bcrypt
+  // Hash the provided password using bcrypt
   bcrypt.hash(password, saltRounds, (err, hash) => {
     if (err) {
       return res.status(500).json({ message: "Internal server error" });

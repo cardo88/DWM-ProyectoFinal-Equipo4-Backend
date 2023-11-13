@@ -3,7 +3,7 @@ import { User } from "../models/User";
 const users: User[] = [
   {
     id: 0,
-    username: "pedro",
+    username: "manuel",
     password: "$2b$10$zSFi19CeCGYBZxtDeF93WerWJ5ElwHdcm6ar6zsvzbTIcLuVqC8/K",
   },
 ];

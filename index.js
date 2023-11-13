@@ -1,7 +1,6 @@
 const express = require('express');
 const conectarDB = require('./config/db');
 const cors = require("cors");
-const io = require('./config/websocket');
 ////////////////////////////////
 const mongoose = require("mongoose");
 const fs = require('fs');

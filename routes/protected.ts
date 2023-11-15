@@ -1,3 +1,4 @@
+/*
 // src/routes/protected.ts
 import express from "express";
 import authMiddleware from "../src/middleware/auth";
@@ -9,3 +10,4 @@ router.get("/protected", authMiddleware, (req, res) => {
 });
 
 export default router;
+*/

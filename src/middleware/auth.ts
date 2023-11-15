@@ -1,3 +1,4 @@
+/*
 import express from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import "dotenv/config";
@@ -24,3 +25,4 @@ const authMiddleware: express.RequestHandler = (req, res, next) => {
 };
 
 export default authMiddleware;
+*/

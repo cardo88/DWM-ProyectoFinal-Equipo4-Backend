@@ -13,13 +13,14 @@ const userSchema = new mongoose.Schema({
     require: [true, 'Ingresa tu email.'],
     unique: true,
     lowercase: true,
-    validate: [validator.isEmail, 'Por favor ingresa un email válido.'],
+    // validate: [validator.isEmail, 'Por favor ingresa un email válido.'],
   },
   photo: String,
   password:{
     type: String,
     required: [true, 'Ingresa una contraseña de al menos 8 caracteres.'],
     minlength: 8,
+    select: false //para que no se muestren los passwords en ningún lado
   },
   passwordConfirm:{
     type: String,
@@ -34,7 +35,7 @@ const userSchema = new mongoose.Schema({
   }
 });
 
-//encripando el password
+//encriptando el password
 userSchema.pre('save', async function(next){
 
   //se ejecuta si el password se modificó
@@ -48,17 +49,12 @@ userSchema.pre('save', async function(next){
     next();
 })
 
+//un método de instancia, disponible en todos los docuementos de usuario
+userSchema.methods.correctPassword = async function(candidatePassword, userPassword){
+  return await bcrypt.compare(candidatePassword, userPassword);
+};
+
 const User = mongoose.model('User', userSchema)
 
 module.exports = User
 
-
- /**
-export interface User {
-    
-  id: number;
-  username: String;
-  password: String;
-
-}
-*/

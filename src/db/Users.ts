@@ -1,4 +1,6 @@
-import { User } from "../models/User";
+
+/*
+import { User } from "../../models/User";
 
 const users: User[] = [
   {
@@ -17,3 +19,4 @@ export const saveUser = (username: string, password: string): void => {
   const newUser: User = { id: newUserId, username, password };
   users.concat(newUser);
 };
+*/

@@ -1,3 +1,4 @@
+/*
 // src/app.ts
 import express from "express";
 import bodyParser from "body-parser";
@@ -14,3 +15,4 @@ app.use("/api", protectedRouter);
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+*/

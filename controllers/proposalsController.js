@@ -2,13 +2,13 @@ const Proposal = require('../models/proposal');
 
 exports.createProposal = async (req, res) => {
     try {
-        const existingProposal = await Room.findOne({ name: req.body.name });
+        const existingProposal = await Proposal.findOne({ name: req.body.name });
 
         if (existingProposal) {
             return res.status(400).json({ msg: 'Ya existe una propuesta con este nombre' });
         }
-        const { title, activities } = req.body;
-        const newProposal = new Proposal({ title, activities });
+        const { name, activities } = req.body;
+        const newProposal = new Proposal({ name, activities });
         await newProposal.save();
         res.status(201).json(newProposal);
     } catch (error) {
@@ -30,6 +30,19 @@ exports.getProposals = async (req, res) => {
     try {
         const proposals = await Proposal.find().populate('activities');
         res.status(200).json(proposals);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+};
+
+exports.getProposalId = async (req, res) => {
+    try {
+        const proposal = await Proposal.findById(req.params.id).populate('activities');
+        if (!proposal) {
+            return res.status(404).json({ msg: 'No se encontró la propuesta' });
+        }
+        res.status(200).json(proposal);
     } catch (error) {
         console.log(error);
         res.status(500).send('Hubo un error');

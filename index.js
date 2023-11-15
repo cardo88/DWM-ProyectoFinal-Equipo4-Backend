@@ -19,6 +19,11 @@ conectarDB();
 app.use(cors());
 app.use(express.json());
 
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
 app.use('/api/questions', require('./routes/trivia'));
 app.use('/api/hangman', require('./routes/hangman'));
 app.use('/api/rooms', require('./routes/room'));

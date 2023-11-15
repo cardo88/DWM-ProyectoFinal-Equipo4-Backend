@@ -92,3 +92,25 @@ exports.deleteQuestion = async (req, res) => {
         res.status(500).send('Hubo un error');
     }
 }
+
+exports.updateQuestion = async (req, res) => {
+    try {
+        const { isChecked } = req.body;
+        let question = await Trivia.findById(req.params.id);
+
+        if (!question) {
+            res.status(404).json({ msg: 'No existe la pregunta' });
+        }
+
+        // Actualizar el estado del checkbox
+        question.isChecked = isChecked;
+
+        // Guardar los cambios
+        question = await question.save();
+
+        res.json(question);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+};

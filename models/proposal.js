@@ -6,11 +6,6 @@ const proposalSchema = new mongoose.Schema({
         required: true
     },
     activities: [
-        {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'Trivia',
-          required: true
-        },
     ],
     fechaCreacion: { 
         type: Date, 

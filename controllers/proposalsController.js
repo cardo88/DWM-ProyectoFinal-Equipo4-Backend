@@ -2,13 +2,13 @@ const Proposal = require('../models/proposal');
 
 exports.createProposal = async (req, res) => {
     try {
-        const existingProposal = await Room.findOne({ name: req.body.name });
+        const existingProposal = await Proposal.findOne({ name: req.body.name });
 
         if (existingProposal) {
             return res.status(400).json({ msg: 'Ya existe una propuesta con este nombre' });
         }
-        const { title, activities } = req.body;
-        const newProposal = new Proposal({ title, activities });
+        const { name, activities } = req.body;
+        const newProposal = new Proposal({ name, activities });
         await newProposal.save();
         res.status(201).json(newProposal);
     } catch (error) {

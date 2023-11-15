@@ -36,6 +36,19 @@ exports.getProposals = async (req, res) => {
     }
 };
 
+exports.getProposalId = async (req, res) => {
+    try {
+        const proposal = await Proposal.findById(req.params.id).populate('activities');
+        if (!proposal) {
+            return res.status(404).json({ msg: 'No se encontró la propuesta' });
+        }
+        res.status(200).json(proposal);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+};
+
 exports.deleteProposal = async (req, res) => {
     try {
         let proposal = await req.findById(req.params.id);

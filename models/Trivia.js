@@ -21,6 +21,14 @@ const triviaSchema = new mongoose.Schema({
         type: Date, 
         default: Date.now() 
     },
+    votes: [{
+        room: String,
+        voteCounts: {
+            '+1': { type: Number, default: 0 },
+            '0': { type: Number, default: 0 },
+            '-1': { type: Number, default: 0 },
+        },
+    }],
 });
 
 module.exports = mongoose.model('Trivia', triviaSchema);

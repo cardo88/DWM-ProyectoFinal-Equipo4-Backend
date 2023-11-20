@@ -2,7 +2,9 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 const catchAsync = require('./../utils/catchAsync')
 
+
 const signToken = id =>{
+    console.log(process.env.JWT_SECRET_KEY)
     return jwt.sign({ id }, process.env.JWT_SECRET_KEY, {
         expiresIn: process.env.JWT_EXPIRES_IN
     });
@@ -37,7 +39,6 @@ exports.login = catchAsync(async(req, res, next) => {
         .json({ message: "Fallo de autenticación, ingresa email y contraseña" });
     }
     
-
     //2.check if user exists and password is correct
     const user = await User.findOne({email}).select('+password');
 

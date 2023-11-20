@@ -1,10 +1,10 @@
-const User = require('./../models/User');
-const catchAsync = require('./../utils/catchAsync');
+const User = require("./../models/User");
+const catchAsync = require("./../utils/catchAsync");
 // const AppError = require('./../utils/appError');
 
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
-  Object.keys(obj).forEach(el => {
+  Object.keys(obj).forEach((el) => {
     if (allowedFields.includes(el)) newObj[el] = obj[el];
   });
   return newObj;
@@ -13,27 +13,28 @@ const filterObj = (obj, ...allowedFields) => {
 exports.createUser = async (req, res) => {
   console.log("entre a createUser del controlador");
   try {
-    const existingUser = await User.findOne({ username: req.body.username });
+    console.log(req.body.email)
+    const existingUser = await User.findOne({ email: req.body.email });
     if (existingUser) {
-        return res.status(400).json({ msg: 'Ya existe el usuario, elija otro!' });
+      return res.status(400).json({ msg: "Ya existe el usuario, elija otro!" });
     }
 
-    const username = new User(req.body);
-    await username.save();
-    res.status(201).json(username);
-} catch (error) {
-    if (error.name === 'ValidationError') {
+    const email = new User(req.body);
+    await email.save();
+    res.status(201).json(email);
+    } catch (error) {
+      if (error.name === "ValidationError") {
         // Manejar errores de validación
         const validationErrors = {};
         for (const field in error.errors) {
-            validationErrors[field] = error.errors[field].message;
+          validationErrors[field] = error.errors[field].message;
         }
         res.status(400).json({ errors: validationErrors });
-    } else {
+      } else {
         console.log(error);
-        res.status(500).send('Hubo un error');
-    }
-}
+        res.status(500).send("Hubo un error");
+      }
+  }
 
   // const { username, password } = req.body;
   // // Check if username is already taken
@@ -45,7 +46,7 @@ exports.createUser = async (req, res) => {
   // users.push(newUser);
 
   // Create a JWT token for the new user
-  const token = jwt.sign({ username }, secretKey);
+  const token = jwt.sign({ email }, process.env.JWT_SECRET_KEY);
 
   // Return the token
   res.json({ token });
@@ -56,11 +57,11 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
 
   // SEND RESPONSE
   res.status(200).json({
-    status: 'success',
+    status: "success",
     results: users.length,
     data: {
-      users
-    }
+      users,
+    },
   });
 });
 
@@ -69,26 +70,26 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   if (req.body.password || req.body.passwordConfirm) {
     return next(
       new AppError(
-        'This route is not for password updates. Please use /updateMyPassword.',
+        "This route is not for password updates. Please use /updateMyPassword.",
         400
       )
     );
   }
 
   // 2) Filtered out unwanted fields names that are not allowed to be updated
-  const filteredBody = filterObj(req.body, 'name', 'email');
+  const filteredBody = filterObj(req.body, "name", "email");
 
   // 3) Update user document
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,
-    runValidators: true
+    runValidators: true,
   });
 
   res.status(200).json({
-    status: 'success',
+    status: "success",
     data: {
-      user: updatedUser
-    }
+      user: updatedUser,
+    },
   });
 });
 
@@ -96,19 +97,17 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
   await User.findByIdAndUpdate(req.user.id, { active: false });
 
   res.status(204).json({
-    status: 'success',
-    data: null
+    status: "success",
+    data: null,
   });
 });
 
 exports.getUser = (req, res) => {
   res.status(500).json({
-    status: 'error',
-    message: 'This route is not yet defined!'
+    status: "error",
+    message: "This route is not yet defined!",
   });
 };
-
-
 
 // exports.createUser = (req, res) => {
 //   res.status(500).json({
@@ -117,17 +116,16 @@ exports.getUser = (req, res) => {
 //   });
 // };
 
-
 exports.updateUser = (req, res) => {
   res.status(500).json({
-    status: 'error',
-    message: 'This route is not yet defined!'
+    status: "error",
+    message: "This route is not yet defined!",
   });
 };
 
 exports.deleteUser = (req, res) => {
   res.status(500).json({
-    status: 'error',
-    message: 'This route is not yet defined!'
+    status: "error",
+    message: "This route is not yet defined!",
   });
 };

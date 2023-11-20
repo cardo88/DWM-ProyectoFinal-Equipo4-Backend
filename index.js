@@ -1,6 +1,7 @@
 const express = require('express');
 const conectarDB = require('./config/db');
 const cors = require("cors");
+require('dotenv').config()
 
 ////////////////////////////////
 
@@ -109,7 +110,7 @@ io.on('connection', (socket) => {
     });
 });
 
-const PORTwebsocket = process.env.PORT || 5000;
+const PORTwebsocket = process.env.PORT || 6000;
 
 server.listen(PORTwebsocket, function () {
     console.log(`Info msg: index.js >> WebSocket listo y escuchando por el puerto: ` + PORTwebsocket)

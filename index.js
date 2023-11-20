@@ -104,9 +104,8 @@ io.on('connection', (socket) => {
         //recordar que si el usuario cambia de sala, debo usar el leave de Socket.IO.
     })
 
-
     socket.on('disconnect', () => {
-        console.log('Usuario desconectado');
+        console.log('Usuario desconectado. Socket ID:'+ socket.id);
     });
 });
 

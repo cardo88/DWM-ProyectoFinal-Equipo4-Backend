@@ -37,7 +37,7 @@ exports.getQuestions = async (req, res) => {
 exports.updateQuestion = async (req, res) => {
 
     try {
-        const { question, options, correctAnswer} = req.body;
+        const { question, options, correctAnswer } = req.body;
         let question1 = await Trivia.findById(req.params.id);
 
         if (!question1) {
@@ -114,3 +114,105 @@ exports.updateQuestion = async (req, res) => {
         res.status(500).send('Hubo un error');
     }
 };
+
+exports.addVotePositive = async (req, res) => {
+    try {
+        const { room } = req.body;
+        const question = await Trivia.findById(req.params.id);
+
+        if (!question) {
+            res.status(404).json({ msg: 'No existe la pregunta' });
+            return;
+        }
+
+        // Buscar el voto correspondiente al room
+        let roomVote = question.votes.find(vote => vote.room === room);
+
+        // Si el room no existe, agregarlo con valores por defecto
+        if (!roomVote) {
+            roomVote = { room, voteCounts: { '+1': 1, '0': 0, '-1': 0 } };
+            question.votes.push(roomVote);
+            // Marcar la instancia de question como modificada
+            question.markModified('votes');
+        } else {
+            // Aumentar el valor de "+1"
+            roomVote.voteCounts['+1']++;
+        }
+
+        // Guardar los cambios
+        const updatedQuestion = await question.save();
+
+        res.json(updatedQuestion);
+    } catch (error) {
+        console.log('Error al guardar los cambios:', error);
+        res.status(500).send('Hubo un error');
+    }
+}
+
+exports.addVoteNeutral = async (req, res) => {
+    try {
+        const { room } = req.body;
+        const question = await Trivia.findById(req.params.id);
+
+        if (!question) {
+            res.status(404).json({ msg: 'No existe la pregunta' });
+            return;
+        }
+
+        // Buscar el voto correspondiente al room
+        let roomVote = question.votes.find(vote => vote.room === room);
+
+        // Si el room no existe, agregarlo con valores por defecto
+        if (!roomVote) {
+            roomVote = { room, voteCounts: { '+1': 0, '0': 1, '-1': 0 } };
+            question.votes.push(roomVote);
+            // Marcar la instancia de question como modificada
+            question.markModified('votes');
+        } else {
+            // Aumentar el valor de "0"
+            roomVote.voteCounts['0']++;
+        }
+
+        // Guardar los cambios
+        const updatedQuestion = await question.save();
+
+        res.json(updatedQuestion);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+}
+
+exports.addVoteNegative = async (req, res) => {
+    try {
+        const { room } = req.body;
+        const question = await Trivia.findById(req.params.id);
+
+        if (!question) {
+            res.status(404).json({ msg: 'No existe la pregunta' });
+            return;
+        }
+
+        // Buscar el voto correspondiente al room
+        let roomVote = question.votes.find(vote => vote.room === room);
+
+        // Si el room no existe, agregarlo con valores por defecto
+        if (!roomVote) {
+            roomVote = { room, voteCounts: { '+1': 0, '0': 0, '-1': 1 } };
+            question.votes.push(roomVote);
+            // Marcar la instancia de question como modificada
+            question.markModified('votes');
+        } else {
+            // Aumentar el valor de "-1"
+            roomVote.voteCounts['-1']++;
+        }
+
+        // Guardar los cambios
+        const updatedQuestion = await question.save();
+
+        res.json(updatedQuestion);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+}

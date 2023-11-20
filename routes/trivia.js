@@ -10,4 +10,8 @@ router.put('/:id', triviaController.updateQuestion);
 router.get('/:id', triviaController.getQuestion);
 router.delete('/:id', triviaController.deleteQuestion);
 
+router.put('/:id/vote/positive', triviaController.addVotePositive);
+router.put('/:id/vote/neutral', triviaController.addVoteNeutral);
+router.put('/:id/vote/negative', triviaController.addVoteNegative);
+
 module.exports = router;

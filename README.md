@@ -3,6 +3,7 @@
 npm install express
 npm install bcrypt
 npm install jsonwebtoken
+npm i validator
 para correr el servidor de continuo:
 npm install -g nodemon
 y luego ejecutar, en vez de
@@ -14,6 +15,3 @@ hacerlo de la forma
 para socket en backend:
 npm install express socket.io
 
-
-cuando el websocket use la librería de chalk
-npm install chalk

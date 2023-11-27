@@ -34,7 +34,7 @@ app.use('/api/user', require('./routes/userRoutes'));
 
 const PORTnode = process.env.PORT || 4000;
 app.listen(PORTnode, () => {
-  console.log(`Info msg: index.js >> El servidor está corriendo correctamente en el puerto ${PORTnode}`)
+    console.log(`Info msg: index.js >> El servidor está corriendo correctamente en el puerto ${PORTnode}`)
 });
 
 ////////////////////////////////
@@ -84,29 +84,34 @@ io.on('connection', (socket) => {
     socket.on('mensaje', ({ room, mensaje }) => {
         console.log(room + ' | ' + mensaje);
         socket.join(room);
-        io.to(room).emit('mensaje', { mensaje }); //puedo usar esto para enviar mensajes a la sala
-        //recordar que si el usuario cambia de sala, debo usar el leave de Socket.IO.
+        io.to(room).emit('mensaje', { mensaje });
     })
 
     //Socket Target: para cuando se une un PLAYER a una ROOM
     socket.on('joinRoom', ({ room, nickname }) => {
         let socketid = socket.id;
-        console.log('Socket.id ' + socketid + ' | Nickname: ' + nickname + ' | Sala: ' + room);
+        console.log('joinRoom >> Socket.id ' + socketid + ' | Nickname: ' + nickname + ' | Sala: ' + room);
         socket.join(room);
-        io.to(room).emit('joinRoom', { socketid, room, nickname }); //puedo usar esto para enviar mensajes a la sala
-        //recordar que si el usuario cambia de sala, debo usar el leave de Socket.IO.
+        io.to(room).emit('joinRoom', { socketid, room, nickname });
     })
 
     //Socket Target: comienzo de PARTIDA en una ROOM
     socket.on('roomStartPlay', ({ room, play }) => {
-        console.log(room + ' | ' + play);
+        console.log('roomStartPlay >> ' + room + ' | ' + play);
         socket.join(room);
-        io.to(room).emit('roomStartPlay', { play }); //puedo usar esto para enviar mensajes a la sala
-        //recordar que si el usuario cambia de sala, debo usar el leave de Socket.IO.
+        io.to(room).emit('roomStartPlay', { play });
+    })
+
+    //Socket Target: avisar que un PLAYER termino de jugar
+    socket.on('playerFinished', ({ room, nickname }) => {
+        let socketid = socket.id;
+        console.log('playerFinished >> Socket.id ' + socketid + ' | Nickname: ' + nickname + ' | Sala: ' + room);
+        socket.join(room);
+        io.to(room).emit('playerFinished', { socketid, room, nickname });
     })
 
     socket.on('disconnect', () => {
-        console.log('Usuario desconectado. Socket ID:'+ socket.id);
+        console.log('Usuario desconectado. Socket ID:' + socket.id);
     });
 });
 
@@ -115,7 +120,7 @@ io.on('connection', (socket) => {
 const PORTwebsocket = process.env.WEBSOCKET_PORT || 5050;
 //const websocketServer = http.createServer();
 server.listen(PORTwebsocket, function () {
-  console.log(`Info msg: index.js >> WebSocket listo y escuchando por el puerto:` + PORTwebsocket)
+    console.log(`Info msg: index.js >> WebSocket listo y escuchando por el puerto:` + PORTwebsocket)
 });
 
 // ________/\________/\________/\________/\________/\________/\________/\________/\________/\________

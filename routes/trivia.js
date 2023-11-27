@@ -5,11 +5,11 @@ const triviaController = require('../controllers/triviaController');
 const authMiddleware = require('../middlewares/authenticateJWT');
 
 // api/productos
-router.post('/', triviaController.createQuestion);
+router.post('/', authMiddleware,triviaController.createQuestion);
 router.get('/', triviaController.getQuestions);
-router.put('/:id', triviaController.updateQuestion);
+router.put('/:id', authMiddleware, triviaController.updateQuestion);
 router.get('/:id', triviaController.getQuestion);
-router.delete('/:id', triviaController.deleteQuestion);
+router.delete('/:id', authMiddleware, triviaController.deleteQuestion);
 
 router.put('/:id/vote/positive', triviaController.addVotePositive);
 router.put('/:id/vote/neutral', triviaController.addVoteNeutral);

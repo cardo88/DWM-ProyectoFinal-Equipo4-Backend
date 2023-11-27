@@ -1,7 +1,7 @@
 const express = require('express');
 const conectarDB = require('./config/db');
 const cors = require("cors");
-require('dotenv').config()
+require('dotenv').config();
 
 ////////////////////////////////
 
@@ -31,11 +31,11 @@ app.use('/api/rooms', require('./routes/room'));
 app.use('/api/proposals', require('./routes/proposal'));
 app.use('/api/user', require('./routes/userRoutes'));
 
-const PORTnode = process.env.PORT || 4000;
 
+const PORTnode = process.env.PORT || 4000;
 app.listen(PORTnode, () => {
-    console.log(`Info msg: index.js >> El servidor está corriendo correctamente en el puerto ${PORTnode}`)
-})
+  console.log(`Info msg: index.js >> El servidor está corriendo correctamente en el puerto ${PORTnode}`)
+});
 
 ////////////////////////////////
 
@@ -69,7 +69,7 @@ module.exports = app;
 const options = {
     cors: {
         origin: 'http://localhost:4200',
-    },
+    }
 };
 
 const io = require('socket.io')(server, options);
@@ -110,12 +110,13 @@ io.on('connection', (socket) => {
     });
 });
 
-const PORTwebsocket = process.env.PORT || 6000;
 
+
+const PORTwebsocket = process.env.WEBSOCKET_PORT || 5050;
+//const websocketServer = http.createServer();
 server.listen(PORTwebsocket, function () {
-    console.log(`Info msg: index.js >> WebSocket listo y escuchando por el puerto: ` + PORTwebsocket)
-})
-
+  console.log(`Info msg: index.js >> WebSocket listo y escuchando por el puerto:` + PORTwebsocket)
+});
 
 // ________/\________/\________/\________/\________/\________/\________/\________/\________/\________
 // -------------------------------CONFIGURACION PARA WEBSOCKET---------------------------------------

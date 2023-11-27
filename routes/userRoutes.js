@@ -1,6 +1,7 @@
 const express = require('express')
 const userController = require('./../controllers/userController')
 const authController = require('./../controllers/authController')
+const authMiddleware = require('../middlewares/authenticateJWT');
 
 const router = express.Router();
 
@@ -9,8 +10,8 @@ router.post('/login', authController.login);
 
 router
     .route('/')
-    .get(userController.getAllUsers)
-    .post(userController.createUser);
+    .get( userController.getAllUsers)
+    .post( userController.createUser);
 
 router
     .route('/:id')

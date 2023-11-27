@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const triviaController = require('../controllers/triviaController');
+const authMiddleware = require('../middlewares/authenticateJWT');
 
 // api/productos
 router.post('/', triviaController.createQuestion);

@@ -1,4 +1,6 @@
 const Room = require('../models/Room');
+const Proposal = require('../models/proposal');
+const Trivia = require('../models/Trivia');
 
 
 exports.createRoom = async (req, res) => {
@@ -74,3 +76,29 @@ exports.getRooms = async (req, res) => {
     }
 
 }
+
+
+
+exports.getQuestions = async (req, res) => {
+    try {
+        const room = await Room.findOne({ codeNumber: req.params.codeNumber });
+
+        if (!room) {
+            return res.status(404).json({ msg: 'No se encontró la sala' });
+        }
+
+        const proposal = await Proposal.findById(room.propousalId);
+
+        if (!proposal) {
+            return res.status(404).json({ msg: 'No se encontró la propuesta asociada a la sala' });
+        }
+
+        // Obtener las preguntas asociadas a la propuesta (activities)
+        const questions = await Trivia.find({ _id: { $in: proposal.activities } });
+
+        res.status(200).json(questions);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+};
